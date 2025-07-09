@@ -31,7 +31,7 @@ class CaseController extends Controller
     }
 
     /**
-     * Get all active cases
+     * Получить все активные кейсы
      */
     public function index(Request $request): JsonResponse
     {
@@ -46,7 +46,7 @@ class CaseController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'error' => 'Validation failed',
+                'error' => 'Ошибка валидации',
                 'messages' => $validator->errors()
             ], 422);
         }
@@ -58,7 +58,7 @@ class CaseController extends Controller
                       ->limit(6);
             }]);
 
-        // Apply filters
+        // Применяем фильтры
         if ($request->has('category')) {
             $query->byCategory($request->category);
         }
@@ -75,7 +75,7 @@ class CaseController extends Controller
             $query->featured();
         }
 
-        // Apply sorting
+        // Применяем сортировку
         switch ($request->get('sort', 'sort_order')) {
             case 'price_asc':
                 $query->orderBy('price', 'asc');
@@ -112,13 +112,13 @@ class CaseController extends Controller
     }
 
     /**
-     * Get case details
+     * Получить детали кейса
      */
     public function show(CaseModel $case): JsonResponse
     {
         if (!$case->is_active) {
             return response()->json([
-                'error' => 'Case not found or inactive'
+                'error' => 'Кейс не найден или неактивен'
             ], 404);
         }
 
@@ -126,11 +126,11 @@ class CaseController extends Controller
             $query->orderBy('price', 'desc');
         }]);
 
-        // Add statistics
+        // Добавляем статистику
         $case->statistics = $case->getStatistics();
         $case->recent_openings = $case->getRecentOpenings(10);
 
-        // Check if user can open this case
+        // Проверяем, может ли пользователь открыть этот кейс
         if (Auth::check()) {
             $case->can_open = $case->canBeOpenedBy(Auth::user());
         }
@@ -142,13 +142,13 @@ class CaseController extends Controller
     }
 
     /**
-     * Get case items
+     * Получить предметы кейса
      */
     public function getItems(CaseModel $case): JsonResponse
     {
         if (!$case->is_active) {
             return response()->json([
-                'error' => 'Case not found or inactive'
+                'error' => 'Кейс не найден или неактивен'
             ], 404);
         }
 
@@ -163,7 +163,7 @@ class CaseController extends Controller
     }
 
     /**
-     * Check if user can open case
+     * Проверить, может ли пользователь открыть кейс
      */
     public function canOpen(CaseModel $case): JsonResponse
     {
@@ -172,7 +172,7 @@ class CaseController extends Controller
         if (!$case->is_active) {
             return response()->json([
                 'can_open' => false,
-                'reason' => 'Case is not active'
+                'reason' => 'Кейс неактивен'
             ]);
         }
 
@@ -181,9 +181,9 @@ class CaseController extends Controller
 
         if (!$canOpen) {
             if ($user->level < $case->min_level) {
-                $reason = "Minimum level required: {$case->min_level}";
+                $reason = "Требуемый минимальный уровень: {$case->min_level}";
             } elseif (!$user->canAfford($case->price)) {
-                $reason = "Insufficient balance";
+                $reason = "Недостаточно средств";
             } elseif ($case->max_daily_openings > 0) {
                 $todayOpenings = $case->openings()
                     ->where('user_id', $user->id)
@@ -191,7 +191,7 @@ class CaseController extends Controller
                     ->count();
                 
                 if ($todayOpenings >= $case->max_daily_openings) {
-                    $reason = "Daily opening limit reached";
+                    $reason = "Достигнут дневной лимит открытий";
                 }
             }
         }
@@ -207,7 +207,7 @@ class CaseController extends Controller
     }
 
     /**
-     * Open a single case
+     * Открыть один кейс
      */
     public function openCase(Request $request, CaseModel $case): JsonResponse
     {
@@ -217,24 +217,24 @@ class CaseController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'error' => 'Validation failed',
+                'error' => 'Ошибка валидации',
                 'messages' => $validator->errors()
             ], 422);
         }
 
         $user = Auth::user();
 
-        // Check if case can be opened
+        // Проверяем, можно ли открыть кейс
         if (!$case->canBeOpenedBy($user)) {
             return response()->json([
-                'error' => 'Cannot open this case'
+                'error' => 'Невозможно открыть этот кейс'
             ], 403);
         }
 
         try {
             DB::beginTransaction();
 
-            // Open the case
+            // Открываем кейс
             $opening = $this->caseOpeningService->openCase(
                 $user,
                 $case,
@@ -243,10 +243,10 @@ class CaseController extends Controller
 
             DB::commit();
 
-            // Broadcast the opening
+            // Транслируем открытие
             BroadcastCaseOpening::dispatch($opening);
             
-            // Fire event
+            // Запускаем событие
             event(new CaseOpened($opening));
 
             return response()->json([
@@ -258,14 +258,14 @@ class CaseController extends Controller
             DB::rollBack();
             
             return response()->json([
-                'error' => 'Failed to open case',
+                'error' => 'Не удалось открыть кейс',
                 'message' => $e->getMessage()
             ], 500);
         }
     }
 
     /**
-     * Open multiple cases
+     * Открыть несколько кейсов
      */
     public function multiOpen(Request $request, CaseModel $case): JsonResponse
     {
@@ -276,7 +276,7 @@ class CaseController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'error' => 'Validation failed',
+                'error' => 'Ошибка валидации',
                 'messages' => $validator->errors()
             ], 422);
         }
@@ -285,14 +285,14 @@ class CaseController extends Controller
         $count = $request->count;
         $totalCost = $case->price * $count;
 
-        // Check if user can afford multiple openings
+        // Проверяем, может ли пользователь позволить себе множественные открытия
         if (!$user->canAfford($totalCost)) {
             return response()->json([
-                'error' => 'Insufficient balance for multiple openings'
+                'error' => 'Недостаточно средств для множественного открытия'
             ], 403);
         }
 
-        // Check daily limits
+        // Проверяем дневные лимиты
         if ($case->max_daily_openings > 0) {
             $todayOpenings = $case->openings()
                 ->where('user_id', $user->id)
@@ -301,7 +301,7 @@ class CaseController extends Controller
             
             if ($todayOpenings + $count > $case->max_daily_openings) {
                 return response()->json([
-                    'error' => 'Would exceed daily opening limit'
+                    'error' => 'Превышен дневной лимит открытий'
                 ], 403);
             }
         }
@@ -313,7 +313,7 @@ class CaseController extends Controller
             $clientSeed = $request->client_seed;
 
             for ($i = 0; $i < $count; $i++) {
-                // Use different nonce for each opening
+                // Используем разные nonce для каждого открытия
                 $opening = $this->caseOpeningService->openCase(
                     $user,
                     $case,
@@ -325,7 +325,7 @@ class CaseController extends Controller
 
             DB::commit();
 
-            // Broadcast each opening
+            // Транслируем каждое открытие
             foreach ($openings as $opening) {
                 BroadcastCaseOpening::dispatch($opening);
                 event(new CaseOpened($opening));
@@ -346,24 +346,24 @@ class CaseController extends Controller
             DB::rollBack();
             
             return response()->json([
-                'error' => 'Failed to open cases',
+                'error' => 'Не удалось открыть кейсы',
                 'message' => $e->getMessage()
             ], 500);
         }
     }
 
     /**
-     * Simulate case opening (for preview)
+     * Симулировать открытие кейса (для предпросмотра)
      */
     public function simulate(CaseModel $case): JsonResponse
     {
         if (!$case->is_active) {
             return response()->json([
-                'error' => 'Case not found or inactive'
+                'error' => 'Кейс не найден или неактивен'
             ], 404);
         }
 
-        // Generate random seeds for simulation
+        // Генерируем случайные seeds для симуляции
         $serverSeed = bin2hex(random_bytes(32));
         $clientSeed = bin2hex(random_bytes(16));
         $nonce = random_int(1, 1000000);
@@ -372,7 +372,7 @@ class CaseController extends Controller
 
         if (!$item) {
             return response()->json([
-                'error' => 'No items in case'
+                'error' => 'В кейсе нет предметов'
             ], 404);
         }
 
@@ -391,7 +391,7 @@ class CaseController extends Controller
     }
 
     /**
-     * Get user's case openings
+     * Получить открытия кейсов пользователя
      */
     public function getOpenings(Request $request): JsonResponse
     {
@@ -404,7 +404,7 @@ class CaseController extends Controller
 
         if ($validator->fails()) {
             return response()->json([
-                'error' => 'Validation failed',
+                'error' => 'Ошибка валидации',
                 'messages' => $validator->errors()
             ], 422);
         }
@@ -412,7 +412,7 @@ class CaseController extends Controller
         $user = Auth::user();
         $query = $user->caseOpenings()->with(['case', 'item']);
 
-        // Apply filters
+        // Применяем фильтры
         if ($request->has('case_id')) {
             $query->where('case_id', $request->case_id);
         }
@@ -441,7 +441,7 @@ class CaseController extends Controller
     }
 
     /**
-     * Get specific case opening
+     * Получить конкретное открытие кейса
      */
     public function getOpening(CaseOpening $opening): JsonResponse
     {
@@ -449,7 +449,7 @@ class CaseController extends Controller
 
         if ($opening->user_id !== $user->id) {
             return response()->json([
-                'error' => 'Unauthorized'
+                'error' => 'Нет доступа'
             ], 403);
         }
 
@@ -462,7 +462,7 @@ class CaseController extends Controller
     }
 
     /**
-     * Verify case opening (Provably Fair)
+     * Проверить открытие кейса (Provably Fair)
      */
     public function verifyOpening(CaseOpening $opening): JsonResponse
     {
@@ -470,13 +470,13 @@ class CaseController extends Controller
 
         if ($opening->user_id !== $user->id) {
             return response()->json([
-                'error' => 'Unauthorized'
+                'error' => 'Нет доступа'
             ], 403);
         }
 
         $isValid = $opening->verifyHash();
 
-        // Regenerate the outcome for verification
+        // Пересоздаем результат для проверки
         $case = $opening->case;
         $verificationItem = $case->getRandomItem(
             $opening->server_seed,

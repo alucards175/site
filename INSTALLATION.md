@@ -1,234 +1,234 @@
-# 🚀 Installation Guide - Hitmanki Store
+# 🚀 Инструкция по установке - Hitmanki Store
 
-Complete step-by-step installation guide for the case opening website.
+Пошаговое руководство по установке сайта для открытия кейсов.
 
-## 📋 Prerequisites
+## 📋 Требования
 
-### System Requirements
-- **OS**: Linux (Ubuntu 20.04+ recommended), macOS, or Windows with WSL2
-- **RAM**: Minimum 4GB, 8GB+ recommended
-- **Storage**: 20GB+ free space
-- **Network**: Stable internet connection
+### Системные требования
+- **ОС**: Linux (рекомендуется Ubuntu 20.04+), macOS, или Windows с WSL2
+- **ОЗУ**: Минимум 4ГБ, рекомендуется 8ГБ+
+- **Хранилище**: 20ГБ+ свободного места
+- **Сеть**: Стабильное интернет-соединение
 
-### Required Software
+### Необходимое ПО
 - **Docker**: 24.0+
 - **Docker Compose**: 2.0+
-- **Git**: Latest version
-- **Node.js**: 18.0+ (for local development)
-- **PHP**: 8.1+ (for local development)
-- **Composer**: Latest version (for local development)
+- **Git**: Последняя версия
+- **Node.js**: 18.0+ (для локальной разработки)
+- **PHP**: 8.1+ (для локальной разработки)
+- **Composer**: Последняя версия (для локальной разработки)
 
-## 🔧 Quick Installation (Docker)
+## 🔧 Быстрая установка (Docker)
 
-### 1. Clone Repository
+### 1. Клонирование репозитория
 ```bash
 git clone https://github.com/yourusername/hitmanki-store.git
 cd hitmanki-store
 ```
 
-### 2. Environment Setup
+### 2. Настройка окружения
 ```bash
-# Copy environment template
+# Копируем шаблон окружения
 cp .env.example .env
 
-# Edit environment variables
+# Редактируем переменные окружения
 nano .env
 ```
 
-### 3. Configure Environment Variables
+### 3. Настройка переменных окружения
 ```bash
-# Application
+# Приложение
 APP_NAME="Hitmanki Store"
 APP_ENV=production
 APP_URL=https://hitmanki.store
 
-# Database
+# База данных
 DB_HOST=mysql
 DB_DATABASE=hitmanki_store
 DB_USERNAME=hitmanki
-DB_PASSWORD=your_secure_password
+DB_PASSWORD=ваш_безопасный_пароль
 
 # Redis
 REDIS_HOST=redis
-REDIS_PASSWORD=your_redis_password
+REDIS_PASSWORD=ваш_redis_пароль
 
 # Steam API
-STEAM_API_KEY=your_steam_api_key
+STEAM_API_KEY=ваш_steam_api_ключ
 
-# Payment Gateways
-QIWI_PUBLIC_KEY=your_qiwi_key
-QIWI_SECRET_KEY=your_qiwi_secret
-YOOMONEY_CLIENT_ID=your_yoomoney_client_id
-CRYPTO_BOT_TOKEN=your_crypto_bot_token
+# Платежные шлюзы
+QIWI_PUBLIC_KEY=ваш_qiwi_ключ
+QIWI_SECRET_KEY=ваш_qiwi_секрет
+YOOMONEY_CLIENT_ID=ваш_yoomoney_client_id
+CRYPTO_BOT_TOKEN=ваш_crypto_bot_токен
 
 # Telegram
-TELEGRAM_BOT_TOKEN=your_telegram_bot_token
-TELEGRAM_ADMIN_CHAT_ID=your_admin_chat_id
+TELEGRAM_BOT_TOKEN=ваш_telegram_bot_токен
+TELEGRAM_ADMIN_CHAT_ID=ваш_admin_chat_id
 ```
 
-### 4. Start Services
+### 4. Запуск сервисов
 ```bash
-# Start all services
+# Запускаем все сервисы
 docker-compose up -d
 
-# Check service status
+# Проверяем статус сервисов
 docker-compose ps
 ```
 
-### 5. Initialize Database
+### 5. Инициализация базы данных
 ```bash
-# Enter Laravel container
+# Входим в контейнер Laravel
 docker-compose exec backend bash
 
-# Generate application key
+# Генерируем ключ приложения
 php artisan key:generate
 
-# Run migrations
+# Запускаем миграции
 php artisan migrate
 
-# Seed database with sample data
+# Наполняем базу тестовыми данными
 php artisan db:seed
 
-# Exit container
+# Выходим из контейнера
 exit
 ```
 
-### 6. Verify Installation
+### 6. Проверка установки
 ```bash
-# Check application health
+# Проверяем здоровье приложения
 curl http://localhost:8000/health
 
-# Check WebSocket server
+# Проверяем WebSocket сервер
 curl http://localhost:3001/health
 
-# Check frontend
+# Проверяем фронтенд
 curl http://localhost:3000
 ```
 
-## 🔧 Development Installation
+## 🔧 Установка для разработки
 
-### 1. Backend Setup (Laravel)
+### 1. Настройка Backend (Laravel)
 ```bash
 cd backend
 
-# Install dependencies
+# Устанавливаем зависимости
 composer install
 
-# Copy environment
+# Копируем окружение
 cp .env.example .env
 
-# Generate application key
+# Генерируем ключ приложения
 php artisan key:generate
 
-# Configure database connection in .env
-# Then run migrations
+# Настраиваем подключение к БД в .env
+# Затем запускаем миграции
 php artisan migrate --seed
 
-# Start development server
+# Запускаем сервер разработки
 php artisan serve --host=0.0.0.0 --port=8000
 ```
 
-### 2. WebSocket Server Setup
+### 2. Настройка WebSocket сервера
 ```bash
 cd websocket
 
-# Install dependencies
+# Устанавливаем зависимости
 npm install
 
-# Copy environment
+# Копируем окружение
 cp .env.example .env
 
-# Start development server
+# Запускаем сервер разработки
 npm run dev
 ```
 
-### 3. Frontend Setup (Vue.js)
+### 3. Настройка Frontend (Vue.js)
 ```bash
 cd frontend
 
-# Install dependencies
+# Устанавливаем зависимости
 npm install
 
-# Copy environment
+# Копируем окружение
 cp .env.example .env
 
-# Start development server
+# Запускаем сервер разработки
 npm run dev
 ```
 
-## 🗄️ Database Configuration
+## 🗄️ Настройка базы данных
 
-### MySQL Setup
+### Настройка MySQL
 ```sql
--- Create database
+-- Создаем базу данных
 CREATE DATABASE hitmanki_store CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
--- Create user
-CREATE USER 'hitmanki'@'%' IDENTIFIED BY 'your_secure_password';
+-- Создаем пользователя
+CREATE USER 'hitmanki'@'%' IDENTIFIED BY 'ваш_безопасный_пароль';
 
--- Grant privileges
+-- Предоставляем привилегии
 GRANT ALL PRIVILEGES ON hitmanki_store.* TO 'hitmanki'@'%';
 FLUSH PRIVILEGES;
 ```
 
-### Redis Configuration
+### Настройка Redis
 ```bash
-# Redis configuration in redis.conf
+# Конфигурация Redis в redis.conf
 bind 127.0.0.1
 port 6379
-requirepass your_redis_password
+requirepass ваш_redis_пароль
 maxmemory 256mb
 maxmemory-policy allkeys-lru
 ```
 
-## 🔑 API Keys Setup
+## 🔑 Настройка API ключей
 
-### Steam API Key
-1. Visit [Steam API Key Registration](https://steamcommunity.com/dev/apikey)
-2. Register your domain
-3. Copy API key to `STEAM_API_KEY` in `.env`
+### Steam API ключ
+1. Посетите [Регистрация Steam API ключа](https://steamcommunity.com/dev/apikey)
+2. Зарегистрируйте ваш домен
+3. Скопируйте API ключ в `STEAM_API_KEY` в `.env`
 
-### Payment Gateway Setup
+### Настройка платежных шлюзов
 
 #### Qiwi Wallet
-1. Register at [Qiwi Developer](https://developer.qiwi.com/)
-2. Create payment project
-3. Get public and secret keys
-4. Configure webhook URL: `https://yourdomain.com/api/webhooks/payment/qiwi`
+1. Зарегистрируйтесь на [Qiwi Developer](https://developer.qiwi.com/)
+2. Создайте платежный проект
+3. Получите публичный и секретный ключи
+4. Настройте webhook URL: `https://вашдомен.com/api/webhooks/payment/qiwi`
 
-#### YooMoney
-1. Register at [YooMoney for Developers](https://yoomoney.ru/developers)
-2. Create application
-3. Get client ID and secret
-4. Configure webhook URL: `https://yourdomain.com/api/webhooks/payment/yoomoney`
+#### ЮMoney
+1. Зарегистрируйтесь на [ЮMoney для разработчиков](https://yoomoney.ru/developers)
+2. Создайте приложение
+3. Получите client ID и secret
+4. Настройте webhook URL: `https://вашдомен.com/api/webhooks/payment/yoomoney`
 
 #### Crypto Bot
-1. Contact [@CryptoBot](https://t.me/CryptoBot) on Telegram
-2. Create payment app
-3. Get bot token
-4. Configure webhook URL: `https://yourdomain.com/api/webhooks/payment/crypto`
+1. Обратитесь к [@CryptoBot](https://t.me/CryptoBot) в Telegram
+2. Создайте платежное приложение
+3. Получите токен бота
+4. Настройте webhook URL: `https://вашдомен.com/api/webhooks/payment/crypto`
 
-### Telegram Bot Setup
-1. Create bot via [@BotFather](https://t.me/BotFather)
-2. Get bot token
-3. Add bot to admin chat
-4. Get chat ID using `https://api.telegram.org/bot<token>/getUpdates`
+### Настройка Telegram бота
+1. Создайте бота через [@BotFather](https://t.me/BotFather)
+2. Получите токен бота
+3. Добавьте бота в админский чат
+4. Получите ID чата используя `https://api.telegram.org/bot<токен>/getUpdates`
 
-## 🌐 Production Deployment
+## 🌐 Продакшн развертывание
 
-### Domain and SSL Setup
+### Настройка домена и SSL
 ```bash
-# Install Certbot
+# Устанавливаем Certbot
 sudo apt-get install certbot python3-certbot-nginx
 
-# Get SSL certificate
+# Получаем SSL сертификат
 sudo certbot --nginx -d hitmanki.store -d www.hitmanki.store
 
-# Auto-renewal
+# Автообновление
 sudo systemctl enable certbot.timer
 ```
 
-### Nginx Configuration
+### Конфигурация Nginx
 ```nginx
 server {
     listen 80;
@@ -245,7 +245,7 @@ server {
     ssl_certificate /etc/letsencrypt/live/hitmanki.store/fullchain.pem;
     ssl_certificate_key /etc/letsencrypt/live/hitmanki.store/privkey.pem;
 
-    # Frontend
+    # Фронтенд
     location / {
         proxy_pass http://localhost:3000;
         proxy_set_header Host $host;
@@ -271,90 +271,71 @@ server {
 }
 ```
 
-### Process Management (PM2)
+### Управление процессами (PM2)
 ```bash
-# Install PM2
+# Устанавливаем PM2
 npm install -g pm2
 
-# Start WebSocket server
+# Запускаем WebSocket сервер
 cd websocket
 pm2 start ecosystem.config.js
 
-# Start Laravel worker
+# Запускаем Laravel worker
 cd backend
 pm2 start "php artisan queue:work --sleep=3 --tries=3" --name="laravel-worker"
 
-# Start Laravel Horizon
+# Запускаем Laravel Horizon
 pm2 start "php artisan horizon" --name="laravel-horizon"
 
-# Save PM2 configuration
+# Сохраняем конфигурацию PM2
 pm2 save
 pm2 startup
 ```
 
-## 📊 Monitoring Setup
+## 📊 Настройка мониторинга
 
-### Application Monitoring
+### Мониторинг приложений
 ```bash
-# Install monitoring tools
+# Устанавливаем инструменты мониторинга
 npm install -g @pm2/pm2-plus-node-agent
 
-# Configure PM2 monitoring
+# Настраиваем мониторинг PM2
 pm2 install pm2-server-monit
 ```
 
-### Database Monitoring
+### Мониторинг базы данных
 ```bash
-# Enable MySQL slow query log
+# Включаем лог медленных запросов MySQL
 SET GLOBAL slow_query_log = 'ON';
 SET GLOBAL long_query_time = 2;
 ```
 
-### Log Management
+## 🔒 Усиление безопасности
+
+### Настройка файервола
 ```bash
-# Configure log rotation
-sudo nano /etc/logrotate.d/hitmanki
-
-# Content:
-/var/log/hitmanki/*.log {
-    daily
-    missingok
-    rotate 30
-    compress
-    notifempty
-    create 0644 www-data www-data
-    postrotate
-        systemctl reload nginx
-    endscript
-}
-```
-
-## 🔒 Security Hardening
-
-### Firewall Configuration
-```bash
-# Enable UFW
+# Включаем UFW
 sudo ufw enable
 
-# Allow necessary ports
+# Разрешаем необходимые порты
 sudo ufw allow 22/tcp    # SSH
 sudo ufw allow 80/tcp    # HTTP
 sudo ufw allow 443/tcp   # HTTPS
 
-# Deny all other incoming
+# Запрещаем все остальные входящие
 sudo ufw default deny incoming
 sudo ufw default allow outgoing
 ```
 
-### Fail2Ban Setup
+### Настройка Fail2Ban
 ```bash
-# Install Fail2Ban
+# Устанавливаем Fail2Ban
 sudo apt-get install fail2ban
 
-# Configure
+# Настраиваем
 sudo nano /etc/fail2ban/jail.local
 
-# Content:
+# Содержимое:
 [DEFAULT]
 bantime = 3600
 findtime = 600
@@ -370,106 +351,106 @@ enabled = true
 enabled = true
 ```
 
-## 🧪 Testing Installation
+## 🧪 Тестирование установки
 
-### Run Test Suite
+### Запуск тестов
 ```bash
-# Backend tests
+# Тесты backend
 cd backend
 php artisan test
 
-# Frontend tests
+# Тесты frontend
 cd frontend
 npm run test
 
-# WebSocket tests
+# Тесты WebSocket
 cd websocket
 npm test
 ```
 
-### Load Testing
+### Нагрузочное тестирование
 ```bash
-# Install Artillery
+# Устанавливаем Artillery
 npm install -g artillery
 
-# Run load test
+# Запускаем нагрузочный тест
 artillery quick --count 10 --num 3 http://localhost:8000/api/v1/cases
 ```
 
-## 🚨 Troubleshooting
+## 🚨 Устранение неполадок
 
-### Common Issues
+### Частые проблемы
 
-#### Database Connection Failed
+#### Ошибка подключения к базе данных
 ```bash
-# Check MySQL status
+# Проверяем статус MySQL
 docker-compose logs mysql
 
-# Reset database
+# Сбрасываем базу данных
 docker-compose down -v
 docker-compose up -d mysql
 ```
 
-#### WebSocket Connection Issues
+#### Проблемы с WebSocket соединением
 ```bash
-# Check WebSocket logs
+# Проверяем логи WebSocket
 docker-compose logs websocket
 
-# Verify Redis connection
+# Проверяем подключение к Redis
 docker-compose exec redis redis-cli ping
 ```
 
-#### Permission Issues
+#### Проблемы с правами доступа
 ```bash
-# Fix Laravel permissions
+# Исправляем права Laravel
 sudo chown -R www-data:www-data backend/storage
 sudo chmod -R 755 backend/storage
 ```
 
-### Performance Issues
+### Проблемы производительности
 ```bash
-# Clear all caches
+# Очищаем все кеши
 php artisan cache:clear
 php artisan config:clear
 php artisan route:clear
 php artisan view:clear
 
-# Optimize for production
+# Оптимизируем для продакшена
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 ```
 
-## 📞 Support
+## 📞 Поддержка
 
-### Getting Help
-- **Documentation**: Check `/docs` folder
+### Получение помощи
+- **Документация**: Проверьте папку `/docs`
 - **Issues**: GitHub Issues
-- **Discord**: Join our Discord server
+- **Discord**: Присоединяйтесь к нашему Discord серверу
 - **Email**: support@hitmanki.store
 
-### Reporting Bugs
-1. Check existing issues
-2. Provide detailed description
-3. Include system information
-4. Add reproduction steps
-5. Attach relevant logs
+### Сообщение об ошибках
+1. Проверьте существующие issues
+2. Предоставьте подробное описание
+3. Включите информацию о системе
+4. Добавьте шаги воспроизведения
+5. Приложите соответствующие логи
 
 ---
 
-## ✅ Final Checklist
+## ✅ Финальный чеклист
 
-Before going live, ensure:
+Перед запуском убедитесь:
 
-- [ ] All environment variables configured
-- [ ] SSL certificate installed
-- [ ] Database properly seeded
-- [ ] Payment gateways tested
-- [ ] Steam integration working
-- [ ] WebSocket connections stable
-- [ ] Monitoring configured
-- [ ] Backups scheduled
-- [ ] Security measures active
-- [ ] Performance optimized
+- [ ] Все переменные окружения настроены
+- [ ] SSL сертификат установлен
+- [ ] База данных правильно наполнена
+- [ ] Платежные шлюзы протестированы
+- [ ] Интеграция Steam работает
+- [ ] WebSocket соединения стабильны
+- [ ] Мониторинг настроен
+- [ ] Бэкапы запланированы
+- [ ] Меры безопасности активны
+- [ ] Производительность оптимизирована
 
-**Congratulations! Your case opening website is ready to launch! 🎉**
+**Поздравляем! Ваш сайт для открытия кейсов готов к запуску! 🎉**

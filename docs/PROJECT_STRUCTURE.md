@@ -1,41 +1,41 @@
-# Hitmanki Store - Complete Case Opening Website
+# Hitmanki Store - Полноценный сайт для открытия кейсов
 
-## 🏗️ Project Overview
+## 🏗️ Обзор проекта
 
-A comprehensive case opening website built with modern web technologies, featuring real-time interactions, Steam integration, provably fair system, and complete e-commerce functionality for virtual items.
+Комплексный сайт для открытия кейсов, построенный на современных веб-технологиях, с функциями реального времени, интеграцией Steam, системой provably fair и полной функциональностью электронной коммерции для виртуальных предметов.
 
-## 🛠️ Technology Stack
+## 🛠️ Технологический стек
 
 ### Backend
-- **Laravel 10** - Main API and admin panel
-- **MySQL 8.0** - Primary database
-- **Redis** - Caching, sessions, queues, and real-time data
-- **Laravel Horizon** - Queue monitoring
-- **Laravel Sanctum** - API authentication
+- **Laravel 10** - Основное API и админ-панель
+- **MySQL 8.0** - Основная база данных
+- **Redis** - Кеширование, сессии, очереди и данные реального времени
+- **Laravel Horizon** - Мониторинг очередей
+- **Laravel Sanctum** - API аутентификация
 
-### WebSocket Server
-- **Node.js 18+** - Runtime environment
-- **Socket.io** - Real-time communication
-- **Express.js** - HTTP server framework
-- **IORedis** - Redis client for Node.js
+### WebSocket сервер
+- **Node.js 18+** - Среда выполнения
+- **Socket.io** - Реальное время
+- **Express.js** - HTTP сервер фреймворк
+- **IORedis** - Redis клиент для Node.js
 
 ### Frontend
-- **Vue.js 3** - Progressive framework
-- **Vite** - Build tool and dev server
-- **TailwindCSS** - Utility-first CSS framework
-- **Pinia** - State management
-- **Socket.io Client** - Real-time communication
+- **Vue.js 3** - Прогрессивный фреймворк
+- **Vite** - Инструмент сборки и dev сервер
+- **TailwindCSS** - Utility-first CSS фреймворк
+- **Pinia** - Управление состоянием
+- **Socket.io Client** - Реальное время
 
-### Infrastructure
-- **Docker & Docker Compose** - Containerization
-- **Nginx** - Reverse proxy and static files
-- **Let's Encrypt** - SSL certificates
+### Инфраструктура
+- **Docker & Docker Compose** - Контейнеризация
+- **Nginx** - Обратный прокси и статические файлы
+- **Let's Encrypt** - SSL сертификаты
 
-## 📁 Complete Project Structure
+## 📁 Полная структура проекта
 
 ```
 hitmanki-store/
-├── 📁 backend/                    # Laravel API & Admin
+├── 📁 backend/                    # Laravel API и админка
 │   ├── 📁 app/
 │   │   ├── 📁 Http/Controllers/Api/
 │   │   │   ├── CaseController.php
@@ -47,21 +47,21 @@ hitmanki-store/
 │   │   │   ├── LiveFeedController.php
 │   │   │   └── StatisticsController.php
 │   │   ├── 📁 Models/
-│   │   │   ├── User.php               # User with Steam integration
-│   │   │   ├── CaseModel.php          # Cases with provably fair
-│   │   │   ├── Item.php               # Virtual items
-│   │   │   ├── CaseOpening.php        # Opening events
-│   │   │   ├── UserInventory.php      # User items
-│   │   │   ├── Deposit.php            # Payment deposits
-│   │   │   ├── Withdrawal.php         # Payment withdrawals
-│   │   │   ├── PromoCode.php          # Promo codes
-│   │   │   └── Achievement.php        # User achievements
+│   │   │   ├── User.php               # Пользователь с интеграцией Steam
+│   │   │   ├── CaseModel.php          # Кейсы с provably fair
+│   │   │   ├── Item.php               # Виртуальные предметы
+│   │   │   ├── CaseOpening.php        # События открытия
+│   │   │   ├── UserInventory.php      # Предметы пользователя
+│   │   │   ├── Deposit.php            # Депозиты платежей
+│   │   │   ├── Withdrawal.php         # Выводы платежей
+│   │   │   ├── PromoCode.php          # Промокоды
+│   │   │   └── Achievement.php        # Достижения пользователей
 │   │   ├── 📁 Services/
-│   │   │   ├── CaseOpeningService.php # Core opening logic
-│   │   │   ├── ProvablyFairService.php # Cryptographic fairness
-│   │   │   ├── PaymentService.php     # Payment processing
-│   │   │   ├── SteamService.php       # Steam API integration
-│   │   │   └── TelegramService.php    # Telegram notifications
+│   │   │   ├── CaseOpeningService.php # Основная логика открытия
+│   │   │   ├── ProvablyFairService.php # Криптографическая честность
+│   │   │   ├── PaymentService.php     # Обработка платежей
+│   │   │   ├── SteamService.php       # Интеграция Steam API
+│   │   │   └── TelegramService.php    # Уведомления Telegram
 │   │   ├── 📁 Jobs/
 │   │   │   ├── BroadcastCaseOpening.php
 │   │   │   ├── ProcessDeposit.php
@@ -85,21 +85,21 @@ hitmanki-store/
 │   │   │   └── UserSeeder.php
 │   │   └── 📁 factories/
 │   ├── 📁 routes/
-│   │   ├── api.php                    # Comprehensive API routes
+│   │   ├── api.php                    # Комплексные API роуты
 │   │   └── web.php
 │   ├── 📁 config/
-│   │   ├── app.php                    # Main configuration
-│   │   ├── database.php               # Database config
-│   │   ├── steam.php                  # Steam integration
-│   │   └── payments.php               # Payment gateways
-│   ├── composer.json                  # PHP dependencies
-│   ├── Dockerfile                     # Laravel container
+│   │   ├── app.php                    # Основная конфигурация
+│   │   ├── database.php               # Конфигурация БД
+│   │   ├── steam.php                  # Интеграция Steam
+│   │   └── payments.php               # Платежные шлюзы
+│   ├── composer.json                  # PHP зависимости
+│   ├── Dockerfile                     # Laravel контейнер
 │   └── artisan                        # Laravel CLI
 │
-├── 📁 websocket/                  # Node.js WebSocket Server
-│   ├── server.js                      # Main server file
-│   ├── package.json                   # Node.js dependencies
-│   ├── Dockerfile                     # Node.js container
+├── 📁 websocket/                  # Node.js WebSocket сервер
+│   ├── server.js                      # Основной файл сервера
+│   ├── package.json                   # Node.js зависимости
+│   ├── Dockerfile                     # Node.js контейнер
 │   └── 📁 src/
 │       ├── 📁 handlers/
 │       ├── 📁 middleware/
@@ -152,268 +152,268 @@ hitmanki-store/
 │   │   │   └── validators.ts
 │   │   ├── App.vue
 │   │   └── main.ts
-│   ├── package.json                   # Frontend dependencies
-│   ├── vite.config.ts                 # Vite configuration
-│   ├── tailwind.config.js             # TailwindCSS config
-│   ├── Dockerfile                     # Frontend container
+│   ├── package.json                   # Frontend зависимости
+│   ├── vite.config.ts                 # Конфигурация Vite
+│   ├── tailwind.config.js             # Конфигурация TailwindCSS
+│   ├── Dockerfile                     # Frontend контейнер
 │   └── index.html
 │
-├── 📁 nginx/                      # Nginx Configuration
-│   ├── nginx.conf                     # Main nginx config
+├── 📁 nginx/                      # Конфигурация Nginx
+│   ├── nginx.conf                     # Основная конфигурация nginx
 │   ├── 📁 sites-available/
-│   │   └── hitmanki.store.conf        # Site configuration
-│   └── 📁 ssl/                       # SSL certificates
+│   │   └── hitmanki.store.conf        # Конфигурация сайта
+│   └── 📁 ssl/                       # SSL сертификаты
 │
-├── 📁 docs/                       # Documentation
-│   ├── PROJECT_STRUCTURE.md          # This file
+├── 📁 docs/                       # Документация
+│   ├── PROJECT_STRUCTURE.md          # Этот файл
 │   ├── API_DOCUMENTATION.md
 │   ├── DEPLOYMENT.md
 │   ├── SECURITY.md
 │   └── CONTRIBUTING.md
 │
-├── docker-compose.yml                 # Complete Docker setup
-├── .env.example                       # Environment template
-├── .gitignore                         # Git ignore rules
-└── README.md                          # Project overview
+├── docker-compose.yml                 # Полная настройка Docker
+├── .env.example                       # Шаблон окружения
+├── .gitignore                         # Правила Git ignore
+└── README.md                          # Обзор проекта
 ```
 
-## 🔧 Key Features Implemented
+## 🔧 Реализованные ключевые функции
 
-### 🎰 Case Opening System
-- **Provably Fair Algorithm** - Cryptographically secure randomization
-- **Multi-case Opening** - Open multiple cases simultaneously
-- **Auto-opening Mode** - Automated continuous opening
-- **Real-time Animations** - Smooth GSAP-powered animations
-- **Live Drop Feed** - Real-time display of all openings
+### 🎰 Система открытия кейсов
+- **Алгоритм Provably Fair** - Криптографически безопасная рандомизация
+- **Мульти-открытие кейсов** - Открытие нескольких кейсов одновременно
+- **Авто-открытие** - Автоматическое непрерывное открытие
+- **Анимации реального времени** - Плавные анимации на GSAP
+- **Живая лента дропов** - Отображение всех открытий в реальном времени
 
-### 👤 User Management
-- **Steam OpenID Integration** - Secure Steam authentication
-- **User Levels & Experience** - Progressive leveling system
-- **Referral System** - Multi-tier referral bonuses
-- **Achievement System** - Unlockable achievements
-- **Anti-fraud Protection** - Multiple security measures
+### 👤 Управление пользователями
+- **Интеграция Steam OpenID** - Безопасная авторизация Steam
+- **Уровни и опыт пользователей** - Прогрессивная система уровней
+- **Реферальная система** - Многоуровневые реферальные бонусы
+- **Система достижений** - Разблокируемые достижения
+- **Антифрод защита** - Множественные меры безопасности
 
-### 💰 Payment System
-- **Multiple Gateways** - Qiwi, YooMoney, Crypto Bot, Bank Cards
-- **Steam Market Integration** - Real-time price updates
-- **Automatic Processing** - Webhook-based confirmations
-- **Commission System** - Flexible fee structure
+### 💰 Платежная система
+- **Множественные шлюзы** - Qiwi, ЮMoney, Crypto Bot, банковские карты
+- **Интеграция Steam Market** - Обновление цен в реальном времени
+- **Автоматическая обработка** - Подтверждения на основе вебхуков
+- **Система комиссий** - Гибкая структура комиссий
 
-### 📦 Inventory Management
-- **Real-time Updates** - Instant inventory updates
-- **Item Withdrawal** - Steam trade integration
-- **Item Selling** - Convert items to balance
-- **Trade History** - Complete transaction logs
+### 📦 Управление инвентарем
+- **Обновления в реальном времени** - Мгновенные обновления инвентаря
+- **Вывод предметов** - Интеграция Steam трейдов
+- **Продажа предметов** - Конвертация предметов в баланс
+- **История трейдов** - Полные логи транзакций
 
-### 🔴 Real-time Features
-- **Live Case Openings** - Real-time opening feed
-- **Global Chat** - Multi-room chat system
-- **Online Users** - Live user count and status
-- **Notifications** - Real-time user notifications
+### 🔴 Функции реального времени
+- **Живые открытия кейсов** - Лента открытий в реальном времени
+- **Глобальная чат система** - Мультикомнатная чат система
+- **Онлайн пользователи** - Живой счетчик и статус пользователей
+- **Уведомления** - Уведомления пользователей в реальном времени
 
-### 🛡️ Security Features
-- **Rate Limiting** - Multiple rate limiting layers
-- **Input Validation** - Comprehensive validation
-- **SQL Injection Protection** - Prepared statements
-- **XSS Protection** - Content sanitization
-- **CSRF Protection** - Token-based protection
+### 🛡️ Функции безопасности
+- **Ограничение скорости** - Множественные уровни ограничения скорости
+- **Валидация ввода** - Комплексная валидация
+- **Защита от SQL инъекций** - Подготовленные запросы
+- **Защита от XSS** - Санитизация контента
+- **Защита от CSRF** - Защита на основе токенов
 
-### 📊 Analytics & Monitoring
-- **Real-time Statistics** - Live site statistics
-- **User Analytics** - Detailed user behavior
-- **Financial Reports** - Revenue and profit tracking
-- **System Monitoring** - Health checks and metrics
+### 📊 Аналитика и мониторинг
+- **Статистика реального времени** - Живая статистика сайта
+- **Аналитика пользователей** - Детальное поведение пользователей
+- **Финансовые отчеты** - Отслеживание доходов и прибыли
+- **Мониторинг системы** - Проверки состояния и метрики
 
-## 🗄️ Database Schema
+## 🗄️ Схема базы данных
 
-### Core Tables
-- **users** - User accounts with Steam integration
-- **cases** - Available cases with pricing
-- **items** - Virtual items with rarity system
-- **case_items** - Case-item relationships with drop rates
-- **case_openings** - Opening events with provably fair data
-- **user_inventories** - User-owned items
+### Основные таблицы
+- **users** - Аккаунты пользователей с интеграцией Steam
+- **cases** - Доступные кейсы с ценами
+- **items** - Виртуальные предметы с системой редкости
+- **case_items** - Связи кейсов с предметами с шансами дропа
+- **case_openings** - События открытий с данными provably fair
+- **user_inventories** - Предметы, принадлежащие пользователям
 
-### Financial Tables
-- **deposits** - Payment deposits
-- **withdrawals** - Payment withdrawals
-- **transactions** - All financial transactions
-- **promo_codes** - Promotional codes
+### Финансовые таблицы
+- **deposits** - Депозиты платежей
+- **withdrawals** - Выводы платежей
+- **transactions** - Все финансовые транзакции
+- **promo_codes** - Промокоды
 
-### System Tables
-- **achievements** - Available achievements
-- **user_achievements** - User progress
-- **user_sessions** - Active sessions
-- **activity_logs** - Audit trail
+### Системные таблицы
+- **achievements** - Доступные достижения
+- **user_achievements** - Прогресс пользователей
+- **user_sessions** - Активные сессии
+- **activity_logs** - Аудиторский след
 
-## 🚀 API Endpoints
+## 🚀 API эндпоинты
 
-### Authentication
-- `POST /api/v1/auth/steam` - Steam login
-- `GET /api/v1/auth/user` - Get authenticated user
-- `POST /api/v1/auth/logout` - Logout
+### Авторизация
+- `POST /api/v1/auth/steam` - Вход через Steam
+- `GET /api/v1/auth/user` - Получить авторизованного пользователя
+- `POST /api/v1/auth/logout` - Выход
 
-### Cases
-- `GET /api/v1/cases` - List cases
-- `GET /api/v1/cases/{id}` - Case details
-- `POST /api/v1/cases/{id}/open` - Open case
-- `POST /api/v1/cases/{id}/multi-open` - Multi-open
+### Кейсы
+- `GET /api/v1/cases` - Список кейсов
+- `GET /api/v1/cases/{id}` - Детали кейса
+- `POST /api/v1/cases/{id}/open` - Открыть кейс
+- `POST /api/v1/cases/{id}/multi-open` - Мульти-открытие
 
-### Inventory
-- `GET /api/v1/inventory` - User inventory
-- `POST /api/v1/inventory/{id}/withdraw` - Withdraw item
-- `POST /api/v1/inventory/{id}/sell` - Sell item
+### Инвентарь
+- `GET /api/v1/inventory` - Инвентарь пользователя
+- `POST /api/v1/inventory/{id}/withdraw` - Вывести предмет
+- `POST /api/v1/inventory/{id}/sell` - Продать предмет
 
-### Payments
-- `POST /api/v1/payments/deposit` - Create deposit
-- `GET /api/v1/payments/deposits` - Deposit history
-- `POST /api/v1/payments/withdraw` - Create withdrawal
+### Платежи
+- `POST /api/v1/payments/deposit` - Создать депозит
+- `GET /api/v1/payments/deposits` - История депозитов
+- `POST /api/v1/payments/withdraw` - Создать вывод
 
-## 🌐 WebSocket Events
+## 🌐 WebSocket события
 
-### Client Events
-- `join-room` - Join a room
-- `subscribe-case` - Subscribe to case openings
-- `send-message` - Send chat message
-- `ping` - Connection test
+### События клиента
+- `join-room` - Присоединиться к комнате
+- `subscribe-case` - Подписаться на открытия кейсов
+- `send-message` - Отправить сообщение в чат
+- `ping` - Тест соединения
 
-### Server Events
-- `case-opened` - New case opening
-- `balance-updated` - User balance change
-- `new-message` - New chat message
-- `stats-updated` - Global statistics update
+### События сервера
+- `case-opened` - Новое открытие кейса
+- `balance-updated` - Изменение баланса пользователя
+- `new-message` - Новое сообщение чата
+- `stats-updated` - Обновление глобальной статистики
 
-## 🔒 Security Measures
+## 🔒 Меры безопасности
 
-### Authentication & Authorization
-- Steam OpenID integration
-- JWT token-based API authentication
-- Role-based access control
-- Session management
+### Аутентификация и авторизация
+- Интеграция Steam OpenID
+- JWT токенная API аутентификация
+- Контроль доступа на основе ролей
+- Управление сессиями
 
-### Anti-fraud Protection
-- Rate limiting on all endpoints
-- IP-based restrictions
-- Behavioral analysis
-- Automated suspicious activity detection
+### Антифрод защита
+- Ограничение скорости на всех эндпоинтах
+- Ограничения на основе IP
+- Поведенческий анализ
+- Автоматическое обнаружение подозрительной активности
 
-### Data Protection
-- Input sanitization and validation
-- SQL injection prevention
-- XSS protection
-- CSRF token validation
+### Защита данных
+- Санитизация и валидация ввода
+- Предотвращение SQL инъекций
+- Защита от XSS
+- Валидация CSRF токенов
 
-## 📈 Performance Optimizations
+## 📈 Оптимизация производительности
 
-### Caching Strategy
-- Redis for session storage
-- Database query caching
-- API response caching
-- Static asset optimization
+### Стратегия кеширования
+- Redis для хранения сессий
+- Кеширование запросов к базе данных
+- Кеширование ответов API
+- Оптимизация статических ресурсов
 
-### Real-time Optimization
-- WebSocket connection pooling
-- Redis pub/sub for scaling
-- Efficient data serialization
-- Connection cleanup
+### Оптимизация реального времени
+- Пулинг WebSocket соединений
+- Redis pub/sub для масштабирования
+- Эффективная сериализация данных
+- Очистка соединений
 
-### Database Optimization
-- Proper indexing strategy
-- Query optimization
-- Connection pooling
-- Read replicas for scaling
+### Оптимизация базы данных
+- Правильная стратегия индексирования
+- Оптимизация запросов
+- Пулинг соединений
+- Реплики для чтения для масштабирования
 
-## 🛠️ Development Setup
+## 🛠️ Настройка разработки
 
-### Prerequisites
+### Требования
 - Docker & Docker Compose
 - Node.js 18+
 - PHP 8.1+
 - Composer
 
-### Quick Start
+### Быстрый старт
 ```bash
-# Clone repository
+# Клонировать репозиторий
 git clone https://github.com/yourusername/hitmanki-store.git
 cd hitmanki-store
 
-# Setup environment
+# Настроить окружение
 cp .env.example .env
 
-# Start with Docker
+# Запустить с Docker
 docker-compose up -d
 
-# Install dependencies
+# Установить зависимости
 cd backend && composer install
 cd ../frontend && npm install
 cd ../websocket && npm install
 
-# Run migrations
+# Запустить миграции
 php artisan migrate --seed
 ```
 
-## 📊 Monitoring & Analytics
+## 📊 Мониторинг и аналитика
 
-### Health Checks
-- Application health endpoints
-- Database connection monitoring
-- Redis connectivity checks
-- WebSocket server status
+### Проверки состояния
+- Эндпоинты состояния приложения
+- Мониторинг подключения к базе данных
+- Проверки подключения Redis
+- Статус WebSocket сервера
 
-### Logging
-- Structured logging with context
-- Error tracking and alerting
-- Performance metrics
-- User activity logs
+### Логирование
+- Структурированное логирование с контекстом
+- Отслеживание ошибок и оповещения
+- Метрики производительности
+- Логи активности пользователей
 
-### Analytics
-- Real-time user metrics
-- Financial transaction tracking
-- Case opening statistics
-- Performance monitoring
+### Аналитика
+- Метрики пользователей в реальном времени
+- Отслеживание финансовых транзакций
+- Статистика открытий кейсов
+- Мониторинг производительности
 
-## 🚀 Deployment
+## 🚀 Развертывание
 
-### Production Environment
-- Docker Swarm or Kubernetes
-- Load balancing with Nginx
-- SSL termination
-- Database clustering
+### Продакшн окружение
+- Docker Swarm или Kubernetes
+- Балансировка нагрузки с Nginx
+- Терминация SSL
+- Кластеризация базы данных
 
-### CI/CD Pipeline
-- GitHub Actions workflows
-- Automated testing
-- Docker image building
-- Rolling deployments
+### CI/CD пайплайн
+- Воркфлоу GitHub Actions
+- Автоматизированное тестирование
+- Сборка Docker образов
+- Rolling развертывания
 
-### Backup Strategy
-- Database backups
-- File storage backups
-- Configuration backups
-- Disaster recovery procedures
+### Стратегия бэкапов
+- Бэкапы базы данных
+- Бэкапы файлового хранилища
+- Бэкапы конфигураций
+- Процедуры аварийного восстановления
 
-## 📝 Additional Documentation
+## 📝 Дополнительная документация
 
-- **API Documentation** - Complete API reference
-- **Deployment Guide** - Production deployment instructions
-- **Security Guidelines** - Security best practices
-- **Contributing Guide** - Development guidelines
+- **Документация API** - Полный справочник API
+- **Руководство по развертыванию** - Инструкции по продакшн развертыванию
+- **Руководство по безопасности** - Лучшие практики безопасности
+- **Руководство по участию** - Руководящие принципы разработки
 
-## 🎯 Future Enhancements
+## 🎯 Будущие улучшения
 
-### Planned Features
-- Mobile application (React Native)
-- Advanced trading system
-- Tournament mode
-- VIP membership system
-- Multi-language support
+### Планируемые функции
+- Мобильное приложение (React Native)
+- Продвинутая торговая система
+- Турнирный режим
+- VIP система членства
+- Мультиязычная поддержка
 
-### Technical Improvements
-- Microservices architecture
-- Advanced analytics
-- Machine learning integration
-- Enhanced security measures
+### Технические улучшения
+- Микросервисная архитектура
+- Продвинутая аналитика
+- Интеграция машинного обучения
+- Усиленные меры безопасности
 
 ---
 
-**Note**: This is a comprehensive case opening website with all essential features for a production-ready gambling platform. All code follows best practices and industry standards for security, performance, and maintainability.
+**Примечание**: Это комплексный сайт для открытия кейсов со всеми необходимыми функциями для готовой к продакшену gambling платформы. Весь код следует лучшим практикам и промышленным стандартам для безопасности, производительности и поддерживаемости.

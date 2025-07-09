@@ -1,70 +1,70 @@
-# Hitmanki.store - Case Opening Website
+# Hitmanki.store - Сайт для открытия кейсов
 
-A comprehensive case opening website with real-time features, Steam integration, and provably fair system.
+Комплексный сайт для открытия кейсов с функциями реального времени, интеграцией Steam и честной системой Provably Fair.
 
-## 🚀 Tech Stack
+## 🚀 Технологический стек
 
 ### Backend
-- **Laravel 10** - API & Admin Panel
-- **Node.js** - WebSocket Server (Socket.io)
-- **MySQL** - Primary Database
-- **Redis** - Cache & Queues
-- **Laravel Horizon** - Queue Monitoring
-- **Laravel Sanctum** - API Authentication
-- **Provably Fair** - Custom implementation
+- **Laravel 10** - API и админ-панель
+- **Node.js** - WebSocket сервер (Socket.io)
+- **MySQL** - Основная база данных
+- **Redis** - Кеш и очереди
+- **Laravel Horizon** - Мониторинг очередей
+- **Laravel Sanctum** - API авторизация
+- **Provably Fair** - Кастомная реализация честности
 
 ### Frontend
-- **Vue.js 3** - SPA Framework
-- **TailwindCSS** - Styling
-- **Swiper.js** - Animations
-- **Socket.io Client** - Real-time communication
-- **Pinia** - State Management
+- **Vue.js 3** - SPA фреймворк
+- **TailwindCSS** - CSS фреймворк
+- **Swiper.js** - Анимации
+- **Socket.io Client** - Реальное время
+- **Pinia** - Управление состоянием
 
 ### DevOps
-- **Nginx** - Web Server & Proxy
-- **Docker** - Containerization
+- **Nginx** - Веб-сервер и прокси
+- **Docker** - Контейнеризация
 - **GitHub Actions** - CI/CD
-- **Let's Encrypt** - SSL Certificates
+- **Let's Encrypt** - SSL сертификаты
 
-## 📁 Project Structure
+## 📁 Структура проекта
 
 ```
 hitmanki-store/
-├── backend/           # Laravel API & Admin
-├── websocket/         # Node.js WebSocket Server
+├── backend/           # Laravel API и админка
+├── websocket/         # Node.js WebSocket сервер
 ├── frontend/          # Vue.js SPA
-├── docker/           # Docker configurations
-├── docs/             # Documentation
-└── nginx/            # Nginx configurations
+├── docker/           # Docker конфигурации
+├── docs/             # Документация
+└── nginx/            # Nginx конфигурации
 ```
 
-## 🔧 Installation
+## 🔧 Установка
 
-### Prerequisites
+### Требования
 - Docker & Docker Compose
 - Node.js 18+
 - PHP 8.1+
 - Composer
 
-### Quick Start
+### Быстрый старт
 
-1. **Clone the repository**
+1. **Клонировать репозиторий**
 ```bash
 git clone https://github.com/yourusername/hitmanki-store.git
 cd hitmanki-store
 ```
 
-2. **Setup environment**
+2. **Настройка окружения**
 ```bash
 cp .env.example .env
 ```
 
-3. **Start with Docker**
+3. **Запуск с Docker**
 ```bash
 docker-compose up -d
 ```
 
-4. **Install dependencies**
+4. **Установка зависимостей**
 ```bash
 # Backend
 cd backend && composer install
@@ -78,44 +78,44 @@ cd ../frontend && npm install
 cd ../websocket && npm install
 ```
 
-5. **Access the application**
+5. **Доступ к приложению**
 - Frontend: http://localhost:3000
-- Admin Panel: http://localhost:8000/admin
+- Админ-панель: http://localhost:8000/admin
 - WebSocket: ws://localhost:3001
 
-## 🌟 Features
+## 🌟 Основные функции
 
-### Core Features
-- ✅ Steam OpenID Authentication
-- ✅ Real-time case opening animations
-- ✅ Provably fair system
-- ✅ Multi-case opening
-- ✅ Auto-opening feature
-- ✅ Live drop feed
-- ✅ User inventory management
-- ✅ Referral system
-- ✅ Achievement/Level system
+### Базовые возможности
+- ✅ Steam OpenID авторизация
+- ✅ Анимации открытия кейсов в реальном времени
+- ✅ Честная система Provably Fair
+- ✅ Мульти-открытие кейсов
+- ✅ Авто-открытие
+- ✅ Живая лента дропов
+- ✅ Управление инвентарем пользователя
+- ✅ Реферальная система
+- ✅ Система достижений/уровней
 
-### Payment Integration
+### Интеграция платежей
 - ✅ Qiwi Wallet
-- ✅ YooMoney
+- ✅ ЮMoney
 - ✅ Crypto Bot
-- ✅ Bank Cards
+- ✅ Банковские карты
 - ✅ Steam Market API
 
-### Admin Features
-- ✅ User management
-- ✅ Case & item management
-- ✅ Drop rate configuration
-- ✅ Financial analytics
-- ✅ Promo code system
-- ✅ Live monitoring
-- ✅ Anti-fraud system
+### Функции админки
+- ✅ Управление пользователями
+- ✅ Управление кейсами и предметами
+- ✅ Настройка шансов дропа
+- ✅ Финансовая аналитика
+- ✅ Система промокодов
+- ✅ Мониторинг в реальном времени
+- ✅ Антифрод система
 
-## 📄 License
+## 📄 Лицензия
 
-This project is proprietary software. All rights reserved.
+Этот проект является собственностью. Все права защищены.
 
-## 🤝 Support
+## 🤝 Поддержка
 
-For support, contact us at support@hitmanki.store or join our Telegram channel.
+По вопросам поддержки обращайтесь на support@hitmanki.store или в наш Telegram канал.
