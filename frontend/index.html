@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hitmanki Store - Открытие кейсов CS:GO</title>
+  <meta name="description" content="Лучший сайт для открытия кейсов CS:GO с честной системой Provably Fair, интеграцией Steam и выводом скинов">
+  <meta name="keywords" content="cs:go, кейсы, csgo case opening, скины, hitmanki, провабли фэир">
+  
+  <!-- Open Graph meta tags -->
+  <meta property="og:title" content="Hitmanki Store - Открытие кейсов CS:GO">
+  <meta property="og:description" content="Лучший сайт для открытия кейсов CS:GO с честной системой Provably Fair">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://hitmanki.store">
+  <meta property="og:image" content="https://hitmanki.store/og-image.jpg">
+  
+  <!-- Twitter Card meta tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Hitmanki Store - Открытие кейсов CS:GO">
+  <meta name="twitter:description" content="Лучший сайт для открытия кейсов CS:GO с честной системой Provably Fair">
+  <meta name="twitter:image" content="https://hitmanki.store/twitter-image.jpg">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  
+  <!-- Preconnect to improve loading -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  
+  <!-- Theme color -->
+  <meta name="theme-color" content="#1f2937">
+  <meta name="msapplication-TileColor" content="#1f2937">
+  
+  <!-- Disable zoom on mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  
+  <!-- Preload critical resources -->
+  <link rel="modulepreload" href="/src/main.ts">
+</head>
+<body class="bg-gray-900 text-white">
+  <!-- Loading spinner -->
+  <div id="loading" class="fixed inset-0 bg-gray-900 flex items-center justify-center z-50">
+    <div class="flex flex-col items-center">
+      <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-500"></div>
+      <p class="mt-4 text-gray-400">Загрузка...</p>
+    </div>
+  </div>
+  
+  <!-- Vue app mount point -->
+  <div id="app"></div>
+  
+  <!-- Remove loading screen when app loads -->
+  <script>
+    window.addEventListener('DOMContentLoaded', function() {
+      setTimeout(function() {
+        const loading = document.getElementById('loading');
+        if (loading) {
+          loading.style.display = 'none';
+        }
+      }, 1000);
+    });
+  </script>
+  
+  <!-- Main app script -->
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
