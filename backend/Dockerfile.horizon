@@ -1,0 +1,76 @@
+FROM php:8.1-fpm
+
+# Установка рабочей директории
+WORKDIR /var/www/html
+
+# Установка системных зависимостей
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip \
+    supervisor \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Установка PHP расширений
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+
+# Получение последней версии Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Копирование приложения
+COPY . /var/www/html
+COPY --chown=www-data:www-data . /var/www/html
+
+# Установка зависимостей
+RUN composer install --no-dev --optimize-autoloader
+
+# Создание необходимых директорий
+RUN mkdir -p /var/www/html/storage/logs \
+    && mkdir -p /var/www/html/storage/framework/cache \
+    && mkdir -p /var/www/html/storage/framework/sessions \
+    && mkdir -p /var/www/html/storage/framework/views
+
+# Изменение владельца
+RUN chown -R www-data:www-data /var/www/html/storage \
+    && chmod -R 755 /var/www/html/storage
+
+# Создание конфигурации supervisor для Horizon
+RUN echo '[program:laravel-horizon]' > /etc/supervisor/conf.d/horizon.conf \
+    && echo 'process_name=%(program_name)s_%(process_num)02d' >> /etc/supervisor/conf.d/horizon.conf \
+    && echo 'command=php /var/www/html/artisan horizon' >> /etc/supervisor/conf.d/horizon.conf \
+    && echo 'autostart=true' >> /etc/supervisor/conf.d/horizon.conf \
+    && echo 'autorestart=true' >> /etc/supervisor/conf.d/horizon.conf \
+    && echo 'user=www-data' >> /etc/supervisor/conf.d/horizon.conf \
+    && echo 'numprocs=1' >> /etc/supervisor/conf.d/horizon.conf \
+    && echo 'redirect_stderr=true' >> /etc/supervisor/conf.d/horizon.conf \
+    && echo 'stdout_logfile=/var/www/html/storage/logs/horizon.log' >> /etc/supervisor/conf.d/horizon.conf
+
+# Основная конфигурация supervisor
+RUN echo '[supervisord]' > /etc/supervisor/supervisord.conf \
+    && echo 'nodaemon=true' >> /etc/supervisor/supervisord.conf \
+    && echo 'user=root' >> /etc/supervisor/supervisord.conf \
+    && echo 'logfile=/var/log/supervisor/supervisord.log' >> /etc/supervisor/supervisord.conf \
+    && echo 'pidfile=/var/run/supervisord.pid' >> /etc/supervisor/supervisord.conf \
+    && echo '' >> /etc/supervisor/supervisord.conf \
+    && echo '[rpcinterface:supervisor]' >> /etc/supervisor/supervisord.conf \
+    && echo 'supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface' >> /etc/supervisor/supervisord.conf \
+    && echo '' >> /etc/supervisor/supervisord.conf \
+    && echo '[supervisorctl]' >> /etc/supervisor/supervisord.conf \
+    && echo 'serverurl=unix:///var/run/supervisor.sock' >> /etc/supervisor/supervisord.conf \
+    && echo '' >> /etc/supervisor/supervisord.conf \
+    && echo '[include]' >> /etc/supervisor/supervisord.conf \
+    && echo 'files = /etc/supervisor/conf.d/*.conf' >> /etc/supervisor/supervisord.conf
+
+# Создание лог директории
+RUN mkdir -p /var/log/supervisor
+
+# Переключение на пользователя www-data
+USER root
+
+# Запуск supervisor с Horizon
+CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]

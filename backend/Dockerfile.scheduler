@@ -1,0 +1,85 @@
+FROM php:8.1-fpm
+
+# Установка рабочей директории
+WORKDIR /var/www/html
+
+# Установка системных зависимостей
+RUN apt-get update && apt-get install -y \
+    git \
+    curl \
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip \
+    cron \
+    supervisor \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Установка PHP расширений
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+
+# Получение последней версии Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Копирование приложения
+COPY . /var/www/html
+COPY --chown=www-data:www-data . /var/www/html
+
+# Установка зависимостей
+RUN composer install --no-dev --optimize-autoloader
+
+# Создание необходимых директорий
+RUN mkdir -p /var/www/html/storage/logs \
+    && mkdir -p /var/www/html/storage/framework/cache \
+    && mkdir -p /var/www/html/storage/framework/sessions \
+    && mkdir -p /var/www/html/storage/framework/views
+
+# Изменение владельца
+RUN chown -R www-data:www-data /var/www/html/storage \
+    && chmod -R 755 /var/www/html/storage
+
+# Настройка cron для Laravel scheduler
+RUN echo "* * * * * www-data cd /var/www/html && php artisan schedule:run >> /var/www/html/storage/logs/scheduler.log 2>&1" > /etc/cron.d/laravel-scheduler
+
+# Применение правильных разрешений для cron
+RUN chmod 0644 /etc/cron.d/laravel-scheduler
+
+# Создание конфигурации supervisor для cron
+RUN echo '[program:cron]' > /etc/supervisor/conf.d/cron.conf \
+    && echo 'command=/usr/sbin/cron -f' >> /etc/supervisor/conf.d/cron.conf \
+    && echo 'autostart=true' >> /etc/supervisor/conf.d/cron.conf \
+    && echo 'autorestart=true' >> /etc/supervisor/conf.d/cron.conf \
+    && echo 'user=root' >> /etc/supervisor/conf.d/cron.conf \
+    && echo 'stdout_logfile=/var/www/html/storage/logs/cron.log' >> /etc/supervisor/conf.d/cron.conf \
+    && echo 'stderr_logfile=/var/www/html/storage/logs/cron_error.log' >> /etc/supervisor/conf.d/cron.conf
+
+# Основная конфигурация supervisor
+RUN echo '[supervisord]' > /etc/supervisor/supervisord.conf \
+    && echo 'nodaemon=true' >> /etc/supervisor/supervisord.conf \
+    && echo 'user=root' >> /etc/supervisor/supervisord.conf \
+    && echo 'logfile=/var/log/supervisor/supervisord.log' >> /etc/supervisor/supervisord.conf \
+    && echo 'pidfile=/var/run/supervisord.pid' >> /etc/supervisor/supervisord.conf \
+    && echo '' >> /etc/supervisor/supervisord.conf \
+    && echo '[rpcinterface:supervisor]' >> /etc/supervisor/supervisord.conf \
+    && echo 'supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface' >> /etc/supervisor/supervisord.conf \
+    && echo '' >> /etc/supervisor/supervisord.conf \
+    && echo '[supervisorctl]' >> /etc/supervisor/supervisord.conf \
+    && echo 'serverurl=unix:///var/run/supervisor.sock' >> /etc/supervisor/supervisord.conf \
+    && echo '' >> /etc/supervisor/supervisord.conf \
+    && echo '[include]' >> /etc/supervisor/supervisord.conf \
+    && echo 'files = /etc/supervisor/conf.d/*.conf' >> /etc/supervisor/supervisord.conf
+
+# Создание лог директории
+RUN mkdir -p /var/log/supervisor
+
+# Создание файла логов для scheduler
+RUN touch /var/www/html/storage/logs/scheduler.log \
+    && chown www-data:www-data /var/www/html/storage/logs/scheduler.log
+
+# Установка crontab
+RUN crontab /etc/cron.d/laravel-scheduler
+
+# Запуск supervisor с cron
+CMD ["supervisord", "-c", "/etc/supervisor/supervisord.conf"]
